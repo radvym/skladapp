@@ -1,0 +1,56 @@
+items:
+  - id: stul-2271
+    title: Kovovy stul se skladovou deskou
+    description: Jednoducha skladova pracovni plocha vhodna do dilny nebo zazemi.
+    dimensions: "120 x 80 x 60 cm"
+    condition_note: "Pouzity skladovy kus, bez zaruky."
+    status: available
+    is_unique: true
+    sort_order: 10
+    images:
+      - IMG_2271.png
+
+  - id: regal-2272
+    title: Policovy regal
+    description: Prakticky skladovy regal. Stav overte podle fotografie.
+    dimensions: "90 x 45 x 180 cm"
+    condition_note: "Aktualne veden jako rezervovany."
+    status: reserved
+    is_unique: true
+    sort_order: 20
+    images:
+      - IMG_2272.png
+
+  - id: set-2273
+    title: Skladovy komplet se dvema pohledy
+    description: Ukazkova polozka s vice fotografiemi.
+    dimensions: "Orientacni rozmery dle fotky"
+    condition_note: "Pouzity skladovy kus."
+    status: available
+    is_unique: true
+    sort_order: 30
+    images:
+      - IMG_2273.png
+      - IMG_2274.png
+
+  - id: kus-2275-a
+    title: Varianta A nad sdilenou fotografii
+    description: Jedna fotografie muze byt prirazena vice polozkam.
+    dimensions: "Rozmer neuveden"
+    condition_note: "Metadata je potreba pripadne doplnit rucne."
+    status: available
+    is_unique: true
+    sort_order: 40
+    images:
+      - IMG_2275.png
+
+  - id: kus-2275-b
+    title: Varianta B nad stejnou fotografii
+    description: Druha polozka nad stejnym zdrojovym obrazkem bez AI orezavani.
+    dimensions: "Rozmer neuveden"
+    condition_note: "Ukazka jednoducheho sdileni jednoho obrazku."
+    status: available
+    is_unique: true
+    sort_order: 41
+    images:
+      - IMG_2275.png

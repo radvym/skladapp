@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}{{ item.title }} | Sklad Foto Katalog{% endblock %}
+
+{% block content %}
+  <article class="detail-layout">
+    <section class="detail-gallery">
+      {% for image in item.images %}
+        <a class="detail-image" href="{{ url_for('catalog.media_file', variant='detail', filename=image.basename.rsplit('.', 1)[0] ~ '.jpg') }}" target="_blank" rel="noopener">
+          <picture>
+            <source srcset="{{ url_for('catalog.media_file', variant='web', filename=image.basename.rsplit('.', 1)[0] ~ '.webp') }}" type="image/webp">
+            <img
+              src="{{ url_for('catalog.media_file', variant='web', filename=image.basename.rsplit('.', 1)[0] ~ '.jpg') }}"
+              alt="{{ image.alt }}"
+              loading="lazy"
+              width="960"
+              height="1280">
+          </picture>
+        </a>
+      {% endfor %}
+    </section>
+
+    <aside class="detail-panel">
+      <div class="item-meta">ID {{ item.item_id }}</div>
+      <h1>{{ item.title }}</h1>
+      <p class="status-line">
+        <span class="status-badge status-{{ item.status }}">{{ 'Dostupne' if item.status == 'available' else 'Rezervovano' }}</span>
+      </p>
+
+      {% if item.dimensions %}
+        <div class="detail-block">
+          <h2>Rozmery</h2>
+          <p>{{ item.dimensions }}</p>
+        </div>
+      {% endif %}
+
+      {% if item.description %}
+        <div class="detail-block">
+          <h2>Popis</h2>
+          <p>{{ item.description }}</p>
+        </div>
+      {% endif %}
+
+      {% if item.condition_note %}
+        <div class="detail-block">
+          <h2>Poznamka</h2>
+          <p>{{ item.condition_note }}</p>
+        </div>
+      {% endif %}
+
+      <div class="detail-actions">
+        {% if item.status == 'available' %}
+          <form method="post" action="{{ url_for('catalog.cart_add', item_id=item.item_id) }}">
+            <button class="button button-large" type="submit">Pridat do rezervace</button>
+          </form>
+        {% else %}
+          <p class="muted">Polozka je momentalne mimo aktivni rezervaci.</p>
+        {% endif %}
+        <a class="button button-secondary" href="{{ url_for('catalog.cart_view') }}">Zobrazit rezervaci</a>
+      </div>
+    </aside>
+  </article>
+{% endblock %}

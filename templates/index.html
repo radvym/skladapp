@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Katalog | Sklad Foto Katalog{% endblock %}
+
+{% block content %}
+  <section class="hero">
+    <div>
+      <p class="eyebrow">Skladova aplikace pro foto katalog</p>
+      <h1>Sklad.radekvymazal.cz: rychly prehled skladovych kusu a rezervaci</h1>
+      <p class="hero-copy">
+        Jednoducha skladova aplikace pro zbozi focene primo na sklade. Vetsina polozek je vedena
+        jako unikatni kus, casto jen s orientacnim rozmerym a praktickou poznamkou ke stavu.
+        Pokud vas neco zaujme, pridejte to do rezervace a poslete rychlou poptavku.
+      </p>
+    </div>
+    <div class="filter-pills">
+      <a class="{{ 'is-active' if visibility == 'available' else '' }}" href="{{ url_for('catalog.index', status='available') }}">Dostupne</a>
+      <a class="{{ 'is-active' if visibility == 'reserved' else '' }}" href="{{ url_for('catalog.index', status='reserved') }}">Rezervovane</a>
+      <a class="{{ 'is-active' if visibility == 'all' else '' }}" href="{{ url_for('catalog.index', status='all') }}">Vse viditelne</a>
+    </div>
+  </section>
+
+  <section class="warehouse-strip">
+    <article>
+      <strong>Co tu najdes</strong>
+      <p>Fotografie realnych skladovych kusu, orientacni rozmery a rychly detail bez sloziteho e-shopu.</p>
+    </article>
+    <article>
+      <strong>Jak to funguje</strong>
+      <p>Vyberes polozky do rezervace, vyplnis kontakt a aplikace odele nezavaznou poptavku do Microsoft Teams.</p>
+    </article>
+    <article>
+      <strong>Pro koho je to</strong>
+      <p>Pro mensi sklad, bazarovy provoz nebo rychly interní katalog bez robustni administrace.</p>
+    </article>
+  </section>
+
+  {% if items %}
+    <section class="catalog-grid">
+      {% for item in items %}
+        <article class="item-card">
+          <a class="item-thumb" href="{{ url_for('catalog.item_detail', slug=item.slug) }}">
+            {% set image = item.images[0] if item.images else none %}
+            {% if image %}
+              <picture>
+                <source srcset="{{ url_for('catalog.media_file', variant='thumb', filename=image.basename.rsplit('.', 1)[0] ~ '.webp') }}" type="image/webp">
+                <img
+                  src="{{ url_for('catalog.media_file', variant='thumb', filename=image.basename.rsplit('.', 1)[0] ~ '.jpg') }}"
+                  alt="{{ image.alt }}"
+                  loading="lazy"
+                  width="420"
+                  height="560">
+              </picture>
+            {% else %}
+              <div class="thumb-placeholder">Bez fotografie</div>
+            {% endif %}
+            <span class="status-badge status-{{ item.status }}">{{ 'Dostupne' if item.status == 'available' else 'Rezervovano' }}</span>
+          </a>
+          <div class="item-body">
+            <div class="item-meta">ID {{ item.item_id }}</div>
+            <h2><a href="{{ url_for('catalog.item_detail', slug=item.slug) }}">{{ item.title }}</a></h2>
+            {% if item.dimensions %}
+              <p class="dimensions">{{ item.dimensions }}</p>
+            {% endif %}
+            <p class="description">
+              {{ item.description or item.condition_note or 'Bez podrobnejsiho popisu.' }}
+            </p>
+            <div class="card-actions">
+              <a class="button button-secondary" href="{{ url_for('catalog.item_detail', slug=item.slug) }}">Detail</a>
+              {% if item.status == 'available' %}
+                <form method="post" action="{{ url_for('catalog.cart_add', item_id=item.item_id) }}">
+                  <button class="button" type="submit">Pridat do rezervace</button>
+                </form>
+              {% endif %}
+            </div>
+          </div>
+        </article>
+      {% endfor %}
+    </section>
+  {% else %}
+    <section class="empty-state">
+      <h2>V katalogu zatim nic neni.</h2>
+      <p>Nejdriv spustte import obrazku a metadat.</p>
+    </section>
+  {% endif %}
+{% endblock %}

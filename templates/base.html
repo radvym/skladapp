@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Sklad Foto Katalog{% endblock %}</title>
+    <meta name="description" content="Jednoduchy katalog skladoveho zbozi s moznosti nezavazne rezervace.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script defer src="{{ url_for('static', filename='js/app.js') }}"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="brand" href="{{ url_for('catalog.index') }}">
+          <span class="brand-mark">SK</span>
+          <span>
+            <strong>Sklad Foto Katalog</strong>
+            <small>Prakticky katalog skladovych kusu</small>
+          </span>
+        </a>
+        <nav class="header-nav">
+          <a href="{{ url_for('catalog.index') }}">Katalog</a>
+          <a class="cart-link" href="{{ url_for('catalog.cart_view') }}">
+            Rezervace
+            <span class="cart-badge">{{ cart_item_count }}</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="wrap flash-stack">
+          {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <main class="wrap page-content">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <p>Verejny katalog skladovych veci. Odeslanim formularu vznika nezavazna rezervace nebo poptavka.</p>
+      </div>
+    </footer>
+  </body>
+</html>

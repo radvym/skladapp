@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Rezervace | Sklad Foto Katalog{% endblock %}
+
+{% block content %}
+  <section class="page-heading">
+    <p class="eyebrow">Rezervacni kosik</p>
+    <h1>Vybrane polozky</h1>
+  </section>
+
+  {% if lines %}
+    <section class="cart-list">
+      {% for line in lines %}
+        <article class="cart-card">
+          <div class="cart-card-main">
+            <div class="item-meta">ID {{ line.item.item_id }}</div>
+            <h2><a href="{{ url_for('catalog.item_detail', slug=line.item.slug) }}">{{ line.item.title }}</a></h2>
+            {% if line.item.dimensions %}
+              <p class="dimensions">{{ line.item.dimensions }}</p>
+            {% endif %}
+            {% if line.item.condition_note %}
+              <p class="description">{{ line.item.condition_note }}</p>
+            {% endif %}
+          </div>
+
+          <div class="cart-card-actions">
+            {% if not line.item.is_unique %}
+              <form method="post" action="{{ url_for('catalog.cart_update', item_id=line.item.item_id) }}" class="quantity-form">
+                <label for="quantity-{{ line.item.item_id }}">Mnozstvi</label>
+                <input id="quantity-{{ line.item.item_id }}" type="number" min="1" max="99" name="quantity" value="{{ line.quantity }}">
+                <button class="button button-secondary" type="submit">Ulozit</button>
+              </form>
+            {% else %}
+              <p class="muted">Unikatni skladovy kus, rezervuje se 1 ks.</p>
+            {% endif %}
+
+            <form method="post" action="{{ url_for('catalog.cart_remove', item_id=line.item.item_id) }}">
+              <button class="button button-danger" type="submit">Odebrat</button>
+            </form>
+          </div>
+        </article>
+      {% endfor %}
+    </section>
+
+    <div class="checkout-bar">
+      <a class="button button-secondary" href="{{ url_for('catalog.index') }}">Pokracovat v katalogu</a>
+      <a class="button button-large" href="{{ url_for('catalog.checkout') }}">Pokracovat na formular</a>
+    </div>
+  {% else %}
+    <section class="empty-state">
+      <h2>Rezervace je prazdna.</h2>
+      <p>Vyberte si v katalogu polozky, ktere chcete nezavazne rezervovat.</p>
+      <a class="button" href="{{ url_for('catalog.index') }}">Otevrit katalog</a>
+    </section>
+  {% endif %}
+{% endblock %}

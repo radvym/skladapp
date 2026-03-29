@@ -1,0 +1,33 @@
+items:
+  - id: unikatni-kus-001
+    title: Nazev polozky
+    slug: volitelny-verejny-slug
+    description: Kratky popis nebo poznamka k polozce.
+    dimensions: "120 x 80 x 60 cm"
+    condition_note: "Pouzity skladovy kus, bez zaruky."
+    status: available
+    is_unique: true
+    sort_order: 10
+    images:
+      - IMG_1001.png
+      - IMG_1002.png
+
+  - id: vice-polozek-na-jedne-fotce-a
+    title: Prvni rucne definovana polozka
+    description: Jedna fotka muze byt pouzita pro vice katalogovych zaznamu.
+    dimensions: "Dle stitku"
+    condition_note: "Rucne oddelena polozka nad stejnym obrazkem."
+    status: available
+    is_unique: true
+    images:
+      - IMG_1003.png
+
+  - id: vice-polozek-na-jedne-fotce-b
+    title: Druha rucne definovana polozka
+    description: Druhy zaznam nad stejnou fotkou.
+    dimensions: ""
+    condition_note: ""
+    status: hidden
+    is_unique: true
+    images:
+      - IMG_1003.png

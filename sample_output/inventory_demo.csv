@@ -1,0 +1,21 @@
+item_id,source_image,photo_id,file_name,file_path,detected_count_on_image,title,description,dimensions_raw,width,height,depth,dimension_unit,label_text,detected_metadata,notes,confidence,status,created_at,image_width_px,image_height_px,file_size,file_created_at,file_modified_at,exif_date,hash,perceptual_hash,duplicate_group,duplicate_suspected,category,tag_1,tag_2,tag_3,manual_review_required,ocr_used,ocr_text_raw,hyperlink
+ITEM-000001,IMG_2271.png,PHOTO-000001,IMG_2271.png,/Users/radek/Downloads/Sklad/demo/input/IMG_2271.png,1,ADATA’,"ADATA’ | | oe 2.5"" SATA IISSD | : Zag 2452:",,,,,,"ADATA’ | | oe 2.5"" SATA IISSD | : Zag 2452:","ADATA, IISSD, SUPPORT",,medium,needs_review,2026-03-29T16:46:05,480,640,584566,2026-03-29T16:45:52,2026-03-29T16:45:52,2025:05:04 09:57:03,a0bd0b8575b34b07546b86ea1cc778279703cf9661a4750b390d9d8f8a17137f,7c3f0f0f2f7f7e00,DUP-0001,False,,adata,sata,iissd,True,True,"ADATA’
+| oe 2.5"" SATA IISSD
+: Zag 2452:
+33 » = BD sase
+» Oo == [RAID SUPPORT
+a BE x= Bp
+5 ol
+* $§$D SS",/Users/radek/Downloads/Sklad/demo/input/IMG_2271.png
+ITEM-000002,IMG_2350.png,PHOTO-000002,IMG_2350.png,/Users/radek/Downloads/Sklad/demo/input/IMG_2350.png,1,Wn,Wn | 2 4,,,,,,Wn | 2 4,,,medium,needs_review,2026-03-29T16:46:05,480,640,483293,2026-03-29T16:45:52,2026-03-29T16:45:52,2025:05:04 10:56:49,3877bf3899c98fedc9fc04528d875002f0d15c698afdf4dd4a22712ed3f81bb5,70717978787c7c63,DUP-0002,False,,,,,True,True,"Wn
+2 4",/Users/radek/Downloads/Sklad/demo/input/IMG_2350.png
+ITEM-000003,IMG_3840.png,PHOTO-000003,IMG_3840.png,/Users/radek/Downloads/Sklad/demo/input/IMG_3840.png,1,on,on,,,,,,on,,,medium,needs_review,2026-03-29T16:46:05,480,640,469549,2026-03-29T16:45:52,2026-03-29T16:45:52,2026:03:29 14:35:23,7fa2330daa97bab347536a1cc0c10f4ab354ab41c3b428bef85ff06b4412b05f,ffffb700000030be,DUP-0003,False,,,,,True,True,on,/Users/radek/Downloads/Sklad/demo/input/IMG_3840.png
+ITEM-000004,IMG_3860.png,PHOTO-000004,IMG_3860.png,/Users/radek/Downloads/Sklad/demo/input/IMG_3860.png,1,NE ee ee,NE ee ee | =i etl |e | On Sr =: rig :,,,,,,NE ee ee | =i etl |e | On Sr =: rig :,,,medium,needs_review,2026-03-29T16:46:06,640,480,553748,2026-03-29T16:45:52,2026-03-29T16:45:52,2026:03:29 14:47:31,07be00f1173076d2c35209bc5a5304af588b372374ff683dbff8898259a74b5c,c1004c0c645e7c3e,DUP-0004,False,,,,,True,True,"NE ee ee
+=i etl |e
+On Sr =: rig :
+» sl Lat! ;
+. > I",/Users/radek/Downloads/Sklad/demo/input/IMG_3860.png
+ITEM-000005,IMG_3880.png,PHOTO-000005,IMG_3880.png,/Users/radek/Downloads/Sklad/demo/input/IMG_3880.png,1,"a », TTT 1 1","a », TTT 1 1 | At 4 4 \s | ¥",,,,,,"a », TTT 1 1 | At 4 4 \s | ¥",,,medium,needs_review,2026-03-29T16:46:06,480,640,546887,2026-03-29T16:45:52,2026-03-29T16:45:52,2026:03:29 15:34:52,0b3352a3ca5df6f67ad7f96b91995a7cc9f9922579df3d324ff2cf3940b13ce5,ffffdf0600030101,DUP-0005,False,,,,,True,True,"a », TTT 1 1
+At 4 4 \s
+¥
+~. ae",/Users/radek/Downloads/Sklad/demo/input/IMG_3880.png

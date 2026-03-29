@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Dokonceni rezervace | Sklad Foto Katalog{% endblock %}
+
+{% block content %}
+  <section class="page-heading">
+    <p class="eyebrow">Dokonceni rezervace</p>
+    <h1>Vyplnte kontaktni udaje</h1>
+    <p class="hero-copy">Po odeslani prijde informace do Microsoft Teams a rezervace se ulozi do systemu.</p>
+  </section>
+
+  <div class="checkout-layout">
+    <section class="checkout-form-card">
+      {% if errors.get('rate_limit') %}
+        <div class="flash flash-error">{{ errors['rate_limit'] }}</div>
+      {% endif %}
+      {% if errors.get('cart') %}
+        <div class="flash flash-error">{{ errors['cart'] }}</div>
+      {% endif %}
+      {% if errors.get('started_at') or errors.get('website') %}
+        <div class="flash flash-error">Formular se nepodarilo overit. Zkuste to prosim znovu.</div>
+      {% endif %}
+
+      <form method="post" class="stack-form">
+        <input type="hidden" name="started_at" value="{{ session.get('checkout_started_at', '') }}">
+        <div class="hp-field" aria-hidden="true">
+          <label for="website">Web</label>
+          <input id="website" type="text" name="website" value="{{ form.get('website', '') }}" tabindex="-1" autocomplete="off">
+        </div>
+
+        <div class="form-grid">
+          <div>
+            <label for="first_name">Jmeno</label>
+            <input id="first_name" name="first_name" value="{{ form.get('first_name', '') }}" required>
+            {% if errors.get('first_name') %}<small class="field-error">{{ errors['first_name'] }}</small>{% endif %}
+          </div>
+          <div>
+            <label for="last_name">Prijmeni</label>
+            <input id="last_name" name="last_name" value="{{ form.get('last_name', '') }}" required>
+            {% if errors.get('last_name') %}<small class="field-error">{{ errors['last_name'] }}</small>{% endif %}
+          </div>
+          <div>
+            <label for="city">Mesto</label>
+            <input id="city" name="city" value="{{ form.get('city', '') }}" required>
+            {% if errors.get('city') %}<small class="field-error">{{ errors['city'] }}</small>{% endif %}
+          </div>
+          <div>
+            <label for="email">E-mail</label>
+            <input id="email" type="email" name="email" value="{{ form.get('email', '') }}" required>
+            {% if errors.get('email') %}<small class="field-error">{{ errors['email'] }}</small>{% endif %}
+          </div>
+          <div class="full-width">
+            <label for="phone">Telefon</label>
+            <input id="phone" name="phone" value="{{ form.get('phone', '') }}" required>
+            {% if errors.get('phone') %}<small class="field-error">{{ errors['phone'] }}</small>{% endif %}
+          </div>
+          <div class="full-width">
+            <label for="note">Poznamka</label>
+            <textarea id="note" name="note" rows="4">{{ form.get('note', '') }}</textarea>
+          </div>
+        </div>
+
+        <div class="checkout-bar">
+          <a class="button button-secondary" href="{{ url_for('catalog.cart_view') }}">Zpet na rezervaci</a>
+          <button class="button button-large" type="submit">Odeslat rezervaci</button>
+        </div>
+      </form>
+    </section>
+
+    <aside class="summary-card">
+      <h2>Vybrane polozky</h2>
+      <ul class="summary-list">
+        {% for line in lines %}
+          <li>
+            <strong>{{ line.item.title }}</strong>
+            <span>ID {{ line.item.item_id }}</span>
+            {% if line.item.dimensions %}<span>{{ line.item.dimensions }}</span>{% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </aside>
+  </div>
+{% endblock %}
