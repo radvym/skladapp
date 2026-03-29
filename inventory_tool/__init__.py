@@ -1,2 +1,0 @@
-"""Inventory photo export tool."""
-

@@ -3,6 +3,7 @@ from __future__ import annotations
 import secrets
 from dataclasses import dataclass
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any
 
 from flask import (
@@ -81,12 +82,8 @@ def media_file(variant: str, filename: str):
     allowed_variants = {"thumb", "web", "detail", "originals"}
     if variant not in allowed_variants:
         abort(404)
-    base_dir = (
-        current_app.config["ORIGINALS_DIR"]
-        if variant == "originals"
-        else f"{current_app.config['DERIVED_DIR']}/{variant}"
-    )
-    return send_from_directory(base_dir, filename)
+    base_dir = Path(current_app.config["ORIGINALS_DIR"]) if variant == "originals" else Path(current_app.config["DERIVED_DIR"]) / variant
+    return send_from_directory(str(base_dir.resolve()), filename)
 
 
 @bp.post("/cart/add/<item_id>")

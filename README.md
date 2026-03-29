@@ -47,7 +47,7 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env
-python scripts/import_catalog.py --source-dir .
+python scripts/import_catalog.py
 python run_local.py
 ```
 
@@ -60,8 +60,8 @@ flask --app app:create_app run --debug
 Otevri [http://127.0.0.1:5000](http://127.0.0.1:5000).
 
 Poznamka:
-- `--source-dir .` je jen pohodlny priklad pro tento workspace, kde jsou zdrojove PNG v koreni slozky.
-- Pri beznem provozu bude casto stacit nahravat nove soubory primo do `media/originals/` a spustit `python scripts/import_catalog.py`.
+- Pri beznem provozu nahravej nove soubory primo do `media/originals/` a potom spust `python scripts/import_catalog.py`.
+- Parametr `--source-dir` je volitelny a hodi se hlavne pri jednorazovem importu z jine slozky.
 
 ## Import fotek a katalogu
 
@@ -214,18 +214,14 @@ Dulezite body:
 - `media/originals/`, `media/derived/`, `data/`, `logs/` musi byt zapisovatelne uzivatelem webu
 - web root muze byt jinak read-only
 
-## Demo data v tomto workspace
+## Data a media
 
-Projekt obsahuje maly demo katalog nad soubory:
+- vsechny puvodni fotky patri do `media/originals/`
+- optimalizovane varianty se generuji do `media/derived/`
+- katalogova metadata jsou v `data/catalog.yaml`
+- SQLite provozni data jsou v `data/app.db`
 
-- `IMG_2271.png`
-- `IMG_2272.png`
-- `IMG_2273.png`
-- `IMG_2274.png`
-- `IMG_2275.png`
-- `IMG_2276.png`
-
-Prvnich pet je rucne popsanych v YAML. Soubor `IMG_2276.png` zustava bez metadat, aby import ukazal automaticke vytvoreni polozky.
+V tomto workspace uz je nactena cela sada skladovych fotek v `media/originals/`. Prvnich nekolik polozek je rucne popsanych v YAML a zbytek se umi doplnit automaticky jako jednoduche skladove kusy podle nazvu souboru.
 
 ## Doporuceny provozni postup
 

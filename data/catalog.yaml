@@ -1,56 +1,45 @@
 items:
-  - id: stul-2271
-    title: Kovovy stul se skladovou deskou
-    description: Jednoducha skladova pracovni plocha vhodna do dilny nebo zazemi.
-    dimensions: "120 x 80 x 60 cm"
-    condition_note: "Pouzity skladovy kus, bez zaruky."
+  - id: adata-ssd-2271
+    title: ADATA 2.5\" SATA SSD baleni
+    description: Krabicka nebo baleni k ADATA 2.5\" SATA II SSD, rada S396 podle potisku na obalu.
+    dimensions: "2.5\" format"
+    condition_note: "Je potreba overit, zda jde o baleni nebo kompletni kus podle fyzicke kontroly skladu."
     status: available
     is_unique: true
     sort_order: 10
     images:
       - IMG_2271.png
 
-  - id: regal-2272
-    title: Policovy regal
-    description: Prakticky skladovy regal. Stav overte podle fotografie.
-    dimensions: "90 x 45 x 180 cm"
-    condition_note: "Aktualne veden jako rezervovany."
-    status: reserved
+  - id: meanwell-ad155a-set
+    title: 2x napajeci zdroj Mean Well AD-155A
+    description: Dvojice spinanych napajecich zdroju Mean Well AD-155A, nafocena z boku i z vrchni strany.
+    dimensions: "Model AD-155A, rozmer jednotlivych kusu dle vyrobni specifikace"
+    condition_note: "Pouzite skladove kusy, stav a funkcnost je vhodne overit pred expedici."
+    status: available
     is_unique: true
     sort_order: 20
     images:
       - IMG_2272.png
+      - IMG_2273.png
 
-  - id: set-2273
-    title: Skladovy komplet se dvema pohledy
-    description: Ukazkova polozka s vice fotografiemi.
-    dimensions: "Orientacni rozmery dle fotky"
-    condition_note: "Pouzity skladovy kus."
+  - id: patch-panel-2274
+    title: 19\" sitovy patch panel
+    description: Rackovy patch panel s vice RJ45 porty, vhodny pro sitovou nebo datovou instalaci.
+    dimensions: "19\" rack format"
+    condition_note: "Skladovy kus bez podrobnejsi dokumentace, portovou konfiguraci overte podle fotky."
     status: available
     is_unique: true
     sort_order: 30
     images:
-      - IMG_2273.png
       - IMG_2274.png
 
-  - id: kus-2275-a
-    title: Varianta A nad sdilenou fotografii
-    description: Jedna fotografie muze byt prirazena vice polozkam.
-    dimensions: "Rozmer neuveden"
-    condition_note: "Metadata je potreba pripadne doplnit rucne."
+  - id: cable-manager-2275
+    title: 19\" kabelovy organizér do racku
+    description: Plastovy nebo kovovy horizontalni kabelovy organizér pro 19\" rack, kus je jeste v ochrannem obalu.
+    dimensions: "19\" rack format"
+    condition_note: "Skladovy kus, presne provedeni a hloubku overte fyzicky pri vyskladneni."
     status: available
     is_unique: true
     sort_order: 40
-    images:
-      - IMG_2275.png
-
-  - id: kus-2275-b
-    title: Varianta B nad stejnou fotografii
-    description: Druha polozka nad stejnym zdrojovym obrazkem bez AI orezavani.
-    dimensions: "Rozmer neuveden"
-    condition_note: "Ukazka jednoducheho sdileni jednoho obrazku."
-    status: available
-    is_unique: true
-    sort_order: 41
     images:
       - IMG_2275.png
