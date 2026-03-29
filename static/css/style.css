@@ -186,6 +186,18 @@ h2 {
   max-width: 52rem;
 }
 
+.hero-alert {
+  margin: 1rem 0 0;
+  padding: 1rem 1.1rem;
+  border-radius: 1rem;
+  background: rgba(159, 47, 47, 0.12);
+  border: 1px solid rgba(159, 47, 47, 0.35);
+  color: #8f2020;
+  font-weight: 700;
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
 h1 {
   margin: 0;
   font-size: clamp(2rem, 4vw, 3.2rem);
