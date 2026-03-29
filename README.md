@@ -1,5 +1,17 @@
 # Sklad Foto Katalog
 
+<div align="center">
+  <h2>LIVE WEB</h2>
+  <p>
+    <strong>
+      <a href="https://sklad.radekvymazal.cz">https://sklad.radekvymazal.cz</a>
+    </strong>
+  </p>
+  <p><strong>Web je veřejně dostupný na této adrese.</strong></p>
+</div>
+
+---
+
 Mala Flask aplikace pro prezentaci skladoveho zbozi podle fotografii a pro odeslani nezavazne rezervace do Microsoft Teams. Projekt je navrzeny pro jednoduche nasazeni na Apache2 pod ISPConfig pres WSGI.
 
 ## Co aplikace umi
@@ -198,6 +210,7 @@ Minimalne nastav:
 ```env
 SECRET_KEY=...
 APP_BASE_URL=https://sklad.radekvymazal.cz
+PREFERRED_URL_SCHEME=https
 TEAMS_WEBHOOK_URL=https://...
 TEAMS_WEBHOOK_MODE=workflow
 ```
@@ -212,6 +225,7 @@ Dulezite body:
 - `WSGIScriptAlias` musi smerovat na `wsgi.py`
 - `Alias /media/` a `Alias /static/` musi mit pravo `Require all granted`
 - uzivatel Apache musi mit zapis do `data/` a `logs/`
+- pri HTTPS za reverzni proxy nebo ISPConfig je vhodne mit `APP_BASE_URL` a `PREFERRED_URL_SCHEME=https`, aby aplikace generovala spravne absolutni odkazy
 
 ### 5. Doporucene prava
 

@@ -3,6 +3,7 @@ from __future__ import annotations
 import os
 from dataclasses import dataclass
 from pathlib import Path
+from urllib.parse import urlsplit
 
 from dotenv import load_dotenv
 
@@ -22,6 +23,7 @@ class Config:
     app_base_url: str
     teams_webhook_url: str
     teams_webhook_mode: str
+    preferred_url_scheme: str
     rate_limit_window_seconds: int
     rate_limit_max_requests: int
     min_submit_seconds: int
@@ -35,6 +37,11 @@ class Config:
         media_root = Path(os.getenv("MEDIA_ROOT", base_dir / "media"))
         logs_dir = base_dir / "logs"
 
+        app_base_url = os.getenv("APP_BASE_URL", "http://127.0.0.1:5000").rstrip("/")
+        preferred_url_scheme = os.getenv("PREFERRED_URL_SCHEME")
+        if not preferred_url_scheme:
+            preferred_url_scheme = urlsplit(app_base_url).scheme or "http"
+
         return cls(
             base_dir=base_dir,
             secret_key=os.getenv("SECRET_KEY", "change-me"),
@@ -46,9 +53,10 @@ class Config:
             logs_dir=logs_dir,
             log_path=Path(os.getenv("LOG_PATH", logs_dir / "app.log")),
             catalog_path=Path(os.getenv("CATALOG_PATH", data_dir / "catalog.yaml")),
-            app_base_url=os.getenv("APP_BASE_URL", "http://127.0.0.1:5000").rstrip("/"),
+            app_base_url=app_base_url,
             teams_webhook_url=os.getenv("TEAMS_WEBHOOK_URL", ""),
             teams_webhook_mode=os.getenv("TEAMS_WEBHOOK_MODE", "workflow").strip().lower(),
+            preferred_url_scheme=preferred_url_scheme,
             rate_limit_window_seconds=int(os.getenv("RATE_LIMIT_WINDOW_SECONDS", "900")),
             rate_limit_max_requests=int(os.getenv("RATE_LIMIT_MAX_REQUESTS", "5")),
             min_submit_seconds=int(os.getenv("MIN_SUBMIT_SECONDS", "2")),
@@ -68,6 +76,7 @@ class Config:
             "APP_BASE_URL": self.app_base_url,
             "TEAMS_WEBHOOK_URL": self.teams_webhook_url,
             "TEAMS_WEBHOOK_MODE": self.teams_webhook_mode,
+            "PREFERRED_URL_SCHEME": self.preferred_url_scheme,
             "RATE_LIMIT_WINDOW_SECONDS": self.rate_limit_window_seconds,
             "RATE_LIMIT_MAX_REQUESTS": self.rate_limit_max_requests,
             "MIN_SUBMIT_SECONDS": self.min_submit_seconds,

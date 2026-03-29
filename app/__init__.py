@@ -5,6 +5,7 @@ from logging.handlers import RotatingFileHandler
 from pathlib import Path
 
 from flask import Flask
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 from .config import Config
 from .db import close_db, ensure_database
@@ -20,6 +21,7 @@ def create_app() -> Flask:
         static_folder=str(config.base_dir / "static"),
     )
     app.config.from_mapping(config.as_dict())
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)  # type: ignore[assignment]
 
     _configure_logging(app)
     _ensure_runtime_directories(config)
