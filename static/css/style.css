@@ -84,6 +84,7 @@ h2 {
 .muted,
 .description,
 .hero-copy,
+.hero-note,
 .summary-list span {
   color: var(--muted);
 }
@@ -177,6 +178,12 @@ h2 {
   letter-spacing: 0.12em;
   font-size: 0.85rem;
   font-family: "Trebuchet MS", "Gill Sans", sans-serif;
+}
+
+.hero-note {
+  margin: 0;
+  font-size: 0.95rem;
+  max-width: 52rem;
 }
 
 h1 {

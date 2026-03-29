@@ -126,36 +126,40 @@ Podporovane rezimy:
 
 ### Doporuceny Workflow postup
 
-V Power Automate vytvor flow s triggerem **When an HTTP request is received** a nasledne odesli zpravu do Teams kanalu nebo chatu. Aplikace posila strukturovany JSON a zaroven text `summary_markdown`, ktery lze v toku rovnou pouzit do zpravy.
+V Power Automate vytvor flow s triggerem **When an HTTP request is received** a nasledne odesli zpravu do Teams kanalu nebo chatu. Aplikace v rezimu `workflow` posila primo validni **Adaptive Card JSON**, takze v Teams akci je potreba pracovat s trigger body jako s kartou.
+
+Pokud pouzivas akci typu `Post card in a chat or channel`, neposilej tam libovolny objekt nebo text. Telo requestu musi byt Adaptive Card s `type: "AdaptiveCard"`, jinak flow skonci chybou podobnou `Property 'type' must be 'AdaptiveCard'`.
 
 Ukazka payloadu pro `workflow`:
 
 ```json
 {
-  "title": "Nova rezervace zbozi",
-  "submitted_at": "2026-03-29T15:20:00+00:00",
-  "reservation_code": "RZV-1A2B3C4D",
-  "customer": {
-    "first_name": "Jan",
-    "last_name": "Novak",
-    "city": "Brno",
-    "email": "jan@example.com",
-    "phone": "+420 777 123 456"
+  "type": "AdaptiveCard",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.5",
+  "msteams": {
+    "width": "Full"
   },
-  "items": [
+  "body": [
     {
-      "item_id": "stul-2271",
-      "title": "Kovovy stul se skladovou deskou",
-      "dimensions": "120 x 80 x 60 cm",
-      "quantity": 1,
-      "detail_url": "https://example.com/item/kovovy-stul-se-skladovou-deskou"
+      "type": "TextBlock",
+      "text": "Nova rezervace zbozi"
     }
   ],
-  "note": "Prosim o potvrzeni dostupnosti.",
-  "summary_markdown": "## Nova rezervace zbozi\n...",
-  "catalog_url": "https://example.com"
+  "actions": [
+    {
+      "type": "Action.OpenUrl",
+      "title": "Otevrit katalog",
+      "url": "https://sklad.radekvymazal.cz"
+    }
+  ]
 }
 ```
+
+Poznamka:
+- stav `sent` v aplikaci znamena, ze Power Automate prijal HTTP request
+- pokud pak selze nektery vnitrni krok flow, Power Automate muze vratit uspech webhooku, ale karta se do Teams neodesle
+- proto je vzdy potreba kontrolovat i historii behu konkretniho flow
 
 ### Chovani pri chybe webhooku
 

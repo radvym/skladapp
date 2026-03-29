@@ -26,6 +26,7 @@ def build_payload(
     ]
     items = []
     facts = []
+    item_lines = []
 
     for item in reservation["items"]:
         detail_url = item.get("item_url") or f"{app_base_url}/"
@@ -34,6 +35,7 @@ def build_payload(
             item_line += f" | {item['dimensions']}"
         item_line += f" | {detail_url}"
         lines.append(item_line)
+        item_lines.append(item_line)
         items.append(
             {
                 "item_id": item["item_id"],
@@ -52,23 +54,6 @@ def build_payload(
 
     note = reservation.get("note", "").strip()
     lines.extend(["", f"**Poznamka:** {note or '-'}"])
-
-    workflow_payload = {
-        "title": "Nova rezervace zbozi",
-        "submitted_at": reservation["created_at"],
-        "reservation_code": reservation["reservation_code"],
-        "customer": {
-            "first_name": reservation["first_name"],
-            "last_name": reservation["last_name"],
-            "city": reservation["city"],
-            "email": reservation["email"],
-            "phone": reservation["phone"],
-        },
-        "items": items,
-        "note": note,
-        "summary_markdown": "\n".join(lines),
-        "catalog_url": app_base_url,
-    }
 
     if mode == "incoming":
         return {
@@ -94,7 +79,62 @@ def build_payload(
             ],
         }
 
-    return workflow_payload
+    return {
+        "type": "AdaptiveCard",
+        "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+        "version": "1.5",
+        "msteams": {"width": "Full"},
+        "body": [
+            {
+                "type": "TextBlock",
+                "text": "Nova rezervace zbozi",
+                "weight": "Bolder",
+                "size": "Large",
+                "wrap": True,
+            },
+            {
+                "type": "TextBlock",
+                "text": f"Rezervace {reservation['reservation_code']} prijata {timestamp}",
+                "spacing": "None",
+                "isSubtle": True,
+                "wrap": True,
+            },
+            {
+                "type": "FactSet",
+                "facts": [
+                    {"title": "Zakaznik", "value": customer_name},
+                    {"title": "Mesto", "value": reservation["city"]},
+                    {"title": "E-mail", "value": reservation["email"]},
+                    {"title": "Telefon", "value": reservation["phone"]},
+                ],
+            },
+            {
+                "type": "TextBlock",
+                "text": "Polozky",
+                "weight": "Bolder",
+                "wrap": True,
+                "spacing": "Medium",
+            },
+            {
+                "type": "TextBlock",
+                "text": "\n".join(item_lines) if item_lines else "-",
+                "wrap": True,
+            },
+            {
+                "type": "TextBlock",
+                "text": f"Poznamka: {note or '-'}",
+                "wrap": True,
+                "spacing": "Medium",
+            },
+        ],
+        "actions": [
+            {
+                "type": "Action.OpenUrl",
+                "title": "Otevrit katalog",
+                "url": app_base_url,
+            }
+        ],
+    }
 
 
 def send_payload(webhook_url: str, payload: dict[str, Any], timeout: int = 10) -> tuple[bool, str]:

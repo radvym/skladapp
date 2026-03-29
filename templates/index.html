@@ -5,33 +5,36 @@
 {% block content %}
   <section class="hero">
     <div>
-      <p class="eyebrow">Skladova aplikace pro foto katalog</p>
-      <h1>Sklad.radekvymazal.cz: rychly prehled skladovych kusu a rezervaci</h1>
+      <p class="eyebrow">Skladová aplikace pro foto katalog</p>
+      <h1>Čistím sklad a za cenu dohodou nabízím sumu komponent, které jsou zde</h1>
       <p class="hero-copy">
-        Jednoducha skladova aplikace pro zbozi focene primo na sklade. Vetsina polozek je vedena
-        jako unikatni kus, casto jen s orientacnim rozmerym a praktickou poznamkou ke stavu.
-        Pokud vas neco zaujme, pridejte to do rezervace a poslete rychlou poptavku.
+        Tohle je jednoduchý katalog věcí, které se mi povedlo ve skladu dohledat, nafotit a
+        aspoň základně zdokumentovat. Pokud se ti bude něco hodit, přidej si to do rezervace
+        a ozvi se, cenu domluvíme.
+      </p>
+      <p class="hero-note">
+        Tenhle web byl vyroben s pomocí AI zhruba za 30 minut jako rychlý a praktický katalog pro vyklízení skladu.
       </p>
     </div>
     <div class="filter-pills">
-      <a class="{{ 'is-active' if visibility == 'available' else '' }}" href="{{ url_for('catalog.index', status='available') }}">Dostupne</a>
-      <a class="{{ 'is-active' if visibility == 'reserved' else '' }}" href="{{ url_for('catalog.index', status='reserved') }}">Rezervovane</a>
-      <a class="{{ 'is-active' if visibility == 'all' else '' }}" href="{{ url_for('catalog.index', status='all') }}">Vse viditelne</a>
+      <a class="{{ 'is-active' if visibility == 'available' else '' }}" href="{{ url_for('catalog.index', status='available') }}">Dostupné</a>
+      <a class="{{ 'is-active' if visibility == 'reserved' else '' }}" href="{{ url_for('catalog.index', status='reserved') }}">Rezervované</a>
+      <a class="{{ 'is-active' if visibility == 'all' else '' }}" href="{{ url_for('catalog.index', status='all') }}">Vše viditelné</a>
     </div>
   </section>
 
   <section class="warehouse-strip">
     <article>
-      <strong>Co tu najdes</strong>
-      <p>Fotografie realnych skladovych kusu, orientacni rozmery a rychly detail bez sloziteho e-shopu.</p>
+      <strong>Co tu najdeš</strong>
+      <p>Skladové položky, které se povedlo naleznout a zdokumentovat, většinou aspoň fotografií a základní poznámkou.</p>
+    </article>
+    <article>
+      <strong>Pro koho to je</strong>
+      <p>Pro ISP, kutily nebo komukoliv, komu se některá z nabízených věcí bude prostě hodit.</p>
     </article>
     <article>
       <strong>Jak to funguje</strong>
-      <p>Vyberes polozky do rezervace, vyplnis kontakt a aplikace odele nezavaznou poptavku do Microsoft Teams.</p>
-    </article>
-    <article>
-      <strong>Pro koho je to</strong>
-      <p>Pro mensi sklad, bazarovy provoz nebo rychly interní katalog bez robustni administrace.</p>
+      <p>Vybereš kusy, co tě zajímají, dáš je do rezervace, vyplníš kontakt a já dostanu rychlou poptávku do Microsoft Teams. Pak už se nějak spolu spojíme.</p>
     </article>
   </section>
 
@@ -54,7 +57,7 @@
             {% else %}
               <div class="thumb-placeholder">Bez fotografie</div>
             {% endif %}
-            <span class="status-badge status-{{ item.status }}">{{ 'Dostupne' if item.status == 'available' else 'Rezervovano' }}</span>
+            <span class="status-badge status-{{ item.status }}">{{ 'Dostupné' if item.status == 'available' else 'Rezervováno' }}</span>
           </a>
           <div class="item-body">
             <div class="item-meta">ID {{ item.item_id }}</div>
@@ -69,7 +72,7 @@
               <a class="button button-secondary" href="{{ url_for('catalog.item_detail', slug=item.slug) }}">Detail</a>
               {% if item.status == 'available' %}
                 <form method="post" action="{{ url_for('catalog.cart_add', item_id=item.item_id) }}">
-                  <button class="button" type="submit">Pridat do rezervace</button>
+                  <button class="button" type="submit">Přidat do rezervace</button>
                 </form>
               {% endif %}
             </div>
@@ -79,8 +82,8 @@
     </section>
   {% else %}
     <section class="empty-state">
-      <h2>V katalogu zatim nic neni.</h2>
-      <p>Nejdriv spustte import obrazku a metadat.</p>
+      <h2>V katalogu zatím nic není.</h2>
+      <p>Nejdřív spusťte import obrázků a metadat.</p>
     </section>
   {% endif %}
 {% endblock %}

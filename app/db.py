@@ -113,7 +113,10 @@ def upsert_items(connection: sqlite3.Connection, items: list[dict[str, Any]]) ->
             description=excluded.description,
             dimensions=excluded.dimensions,
             condition_note=excluded.condition_note,
-            status=excluded.status,
+            status=CASE
+                WHEN items.status = 'reserved' AND excluded.status = 'available' THEN items.status
+                ELSE excluded.status
+            END,
             is_unique=excluded.is_unique,
             images_json=excluded.images_json,
             primary_image=excluded.primary_image,
@@ -179,6 +182,18 @@ def set_item_status(connection: sqlite3.Connection, item_id: str, status: str) -
     )
     connection.commit()
     return cursor.rowcount > 0
+
+
+def set_items_reserved(connection: sqlite3.Connection, item_ids: list[str]) -> None:
+    if not item_ids:
+        return
+    placeholders = ",".join("?" for _ in item_ids)
+    params = ["reserved", utcnow().isoformat(), *item_ids]
+    connection.execute(
+        f"UPDATE items SET status = ?, updated_at = ? WHERE item_id IN ({placeholders})",
+        params,
+    )
+    connection.commit()
 
 
 def create_reservation(

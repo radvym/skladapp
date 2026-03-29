@@ -4,8 +4,8 @@
 
 {% block content %}
   <section class="page-heading">
-    <p class="eyebrow">Rezervacni kosik</p>
-    <h1>Vybrane polozky</h1>
+    <p class="eyebrow">Rezervační košík</p>
+    <h1>Vybrané položky</h1>
   </section>
 
   {% if lines %}
@@ -26,12 +26,12 @@
           <div class="cart-card-actions">
             {% if not line.item.is_unique %}
               <form method="post" action="{{ url_for('catalog.cart_update', item_id=line.item.item_id) }}" class="quantity-form">
-                <label for="quantity-{{ line.item.item_id }}">Mnozstvi</label>
+                <label for="quantity-{{ line.item.item_id }}">Množství</label>
                 <input id="quantity-{{ line.item.item_id }}" type="number" min="1" max="99" name="quantity" value="{{ line.quantity }}">
-                <button class="button button-secondary" type="submit">Ulozit</button>
+                <button class="button button-secondary" type="submit">Uložit</button>
               </form>
             {% else %}
-              <p class="muted">Unikatni skladovy kus, rezervuje se 1 ks.</p>
+              <p class="muted">Unikátní skladový kus, rezervuje se 1 ks.</p>
             {% endif %}
 
             <form method="post" action="{{ url_for('catalog.cart_remove', item_id=line.item.item_id) }}">
@@ -43,14 +43,14 @@
     </section>
 
     <div class="checkout-bar">
-      <a class="button button-secondary" href="{{ url_for('catalog.index') }}">Pokracovat v katalogu</a>
-      <a class="button button-large" href="{{ url_for('catalog.checkout') }}">Pokracovat na formular</a>
+      <a class="button button-secondary" href="{{ url_for('catalog.index') }}">Pokračovat v katalogu</a>
+      <a class="button button-large" href="{{ url_for('catalog.checkout') }}">Pokračovat na formulář</a>
     </div>
   {% else %}
     <section class="empty-state">
-      <h2>Rezervace je prazdna.</h2>
-      <p>Vyberte si v katalogu polozky, ktere chcete nezavazne rezervovat.</p>
-      <a class="button" href="{{ url_for('catalog.index') }}">Otevrit katalog</a>
+      <h2>Rezervace je prázdná.</h2>
+      <p>Vyberte si v katalogu položky, které chcete nezávazně rezervovat.</p>
+      <a class="button" href="{{ url_for('catalog.index') }}">Otevřít katalog</a>
     </section>
   {% endif %}
 {% endblock %}

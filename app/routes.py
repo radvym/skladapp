@@ -28,6 +28,7 @@ from .db import (
     list_items,
     log_reservation_event,
     register_rate_limit_event,
+    set_items_reserved,
     update_webhook_status,
     get_db,
 )
@@ -166,6 +167,7 @@ def checkout() -> str:
         )
 
     reservation_id = create_reservation(get_db(), reservation_code, form, reservation_items)
+    set_items_reserved(get_db(), [item["item_id"] for item in reservation_items])
     reservation = get_reservation_by_code(get_db(), reservation_code)
     assert reservation is not None
 

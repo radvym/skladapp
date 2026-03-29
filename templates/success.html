@@ -1,25 +1,25 @@
 {% extends "base.html" %}
 
-{% block title %}Rezervace prijata | Sklad Foto Katalog{% endblock %}
+{% block title %}Rezervace přijata | Sklad Foto Katalog{% endblock %}
 
 {% block content %}
   <section class="empty-state">
-    <p class="eyebrow">Rezervace prijata</p>
-    <h1>Dekuji, rezervace byla ulozena</h1>
+    <p class="eyebrow">Rezervace přijata</p>
+    <h1>Děkuji, rezervace byla uložena</h1>
     <p>
-      Referencni kod rezervace je <strong>{{ reservation.reservation_code }}</strong>.
-      Pokud je webhook nakonfigurovany, odeslala se notifikace do Microsoft Teams.
+      Referenční kód rezervace je <strong>{{ reservation.reservation_code }}</strong>.
+      Pokud je webhook nakonfigurovaný, odeslala se notifikace do Microsoft Teams.
     </p>
     <div class="summary-card success-card">
-      <h2>Udaje o rezervaci</h2>
+      <h2>Údaje o rezervaci</h2>
       <ul class="summary-list">
-        <li><strong>Zakaznik</strong><span>{{ reservation.first_name }} {{ reservation.last_name }}</span></li>
-        <li><strong>Mesto</strong><span>{{ reservation.city }}</span></li>
+        <li><strong>Zákazník</strong><span>{{ reservation.first_name }} {{ reservation.last_name }}</span></li>
+        <li><strong>Město</strong><span>{{ reservation.city }}</span></li>
         <li><strong>E-mail</strong><span>{{ reservation.email }}</span></li>
         <li><strong>Telefon</strong><span>{{ reservation.phone }}</span></li>
         <li><strong>Webhook</strong><span>{{ reservation.webhook_status }}</span></li>
       </ul>
     </div>
-    <a class="button" href="{{ url_for('catalog.index') }}">Zpet do katalogu</a>
+    <a class="button" href="{{ url_for('catalog.index') }}">Zpět do katalogu</a>
   </section>
 {% endblock %}

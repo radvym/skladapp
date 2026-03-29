@@ -24,12 +24,12 @@
       <div class="item-meta">ID {{ item.item_id }}</div>
       <h1>{{ item.title }}</h1>
       <p class="status-line">
-        <span class="status-badge status-{{ item.status }}">{{ 'Dostupne' if item.status == 'available' else 'Rezervovano' }}</span>
+        <span class="status-badge status-{{ item.status }}">{{ 'Dostupné' if item.status == 'available' else 'Rezervováno' }}</span>
       </p>
 
       {% if item.dimensions %}
         <div class="detail-block">
-          <h2>Rozmery</h2>
+          <h2>Rozměry</h2>
           <p>{{ item.dimensions }}</p>
         </div>
       {% endif %}
@@ -43,7 +43,7 @@
 
       {% if item.condition_note %}
         <div class="detail-block">
-          <h2>Poznamka</h2>
+          <h2>Poznámka</h2>
           <p>{{ item.condition_note }}</p>
         </div>
       {% endif %}
@@ -51,10 +51,10 @@
       <div class="detail-actions">
         {% if item.status == 'available' %}
           <form method="post" action="{{ url_for('catalog.cart_add', item_id=item.item_id) }}">
-            <button class="button button-large" type="submit">Pridat do rezervace</button>
+            <button class="button button-large" type="submit">Přidat do rezervace</button>
           </form>
         {% else %}
-          <p class="muted">Polozka je momentalne mimo aktivni rezervaci.</p>
+          <p class="muted">Položka je momentálně mimo aktivní rezervaci.</p>
         {% endif %}
         <a class="button button-secondary" href="{{ url_for('catalog.cart_view') }}">Zobrazit rezervaci</a>
       </div>
