@@ -1,18 +1,6 @@
 # Sklad Foto Katalog
 
-<div align="center">
-  <h2>LIVE WEB</h2>
-  <p>
-    <strong>
-      <a href="https://sklad.radekvymazal.cz">https://sklad.radekvymazal.cz</a>
-    </strong>
-  </p>
-  <p><strong>Web je veřejně dostupný na této adrese.</strong></p>
-</div>
-
----
-
-Mala Flask aplikace pro prezentaci skladoveho zbozi podle fotografii a pro odeslani nezavazne rezervace do Microsoft Teams. Projekt je navrzeny pro jednoduche nasazeni na Apache2 pod ISPConfig pres WSGI.
+Mala Flask aplikace pro prezentaci skladoveho zbozi podle fotografii a pro odeslani nezavazne rezervace do Microsoft Teams. Projekt je navrzeny pro jednoduche nasazeni na Apache2 pres WSGI a je kompatibilni i s hostingem spravovanym pres ISPConfig.
 
 ## Co aplikace umi
 
@@ -77,7 +65,7 @@ Poznamka:
 
 ## Import fotek a katalogu
 
-Hlavni metadata jsou v souboru [data/catalog.yaml](/Users/radek/Downloads/Sklad/data/catalog.yaml).
+Hlavni metadata jsou v souboru `data/catalog.yaml`.
 
 Import udela:
 
@@ -97,7 +85,7 @@ python scripts/import_catalog.py --catalog data/catalog.yaml --database data/app
 
 ### Jak funguje vice polozek nad jednou fotkou
 
-Neprovadi se zadne AI rozpoznavani. Jednoduche reseni je rucne nadefinovat vice katalogovych zaznamu, ktere odkazuji na stejny soubor v poli `images`. Ukazku najdes v [data/catalog.yaml](/Users/radek/Downloads/Sklad/data/catalog.yaml) u polozek `kus-2275-a` a `kus-2275-b`.
+Neprovadi se zadne AI rozpoznavani. Jednoduche reseni je rucne nadefinovat vice katalogovych zaznamu, ktere odkazuji na stejny soubor v poli `images`.
 
 ## Sprava katalogu
 
@@ -128,7 +116,7 @@ Konfigurace je v `.env`:
 ```env
 TEAMS_WEBHOOK_URL=https://...
 TEAMS_WEBHOOK_MODE=workflow
-APP_BASE_URL=https://sklad.radekvymazal.cz
+APP_BASE_URL=https://example.com
 ```
 
 Podporovane rezimy:
@@ -162,7 +150,7 @@ Ukazka payloadu pro `workflow`:
     {
       "type": "Action.OpenUrl",
       "title": "Otevrit katalog",
-      "url": "https://sklad.radekvymazal.cz"
+      "url": "https://example.com"
     }
   ]
 }
@@ -182,22 +170,22 @@ Kdyz webhook selze:
 - chyba se zaloguje do `reservation_logs` a do aplikačního logu
 - pozdeji lze spustit `python scripts/retry_webhooks.py`
 
-## Apache2 / ISPConfig nasazeni
+## Apache2 / mod_wsgi nasazeni
 
 ### 1. Nahraj projekt
 
 Nahraj cely projekt do web rootu, napriklad:
 
 ```text
-/var/www/clients/client1/web1/web
+/var/www/example.com/web
 ```
 
 ### 2. Vytvor virtual environment
 
 ```bash
-cd /var/www/clients/client1/web1/web
-python3.11 -m venv /var/www/clients/client1/web1/venv
-source /var/www/clients/client1/web1/venv/bin/activate
+cd /var/www/example.com/web
+python3.11 -m venv /var/www/example.com/venv
+source /var/www/example.com/venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env
 python scripts/import_catalog.py
@@ -209,7 +197,7 @@ Minimalne nastav:
 
 ```env
 SECRET_KEY=...
-APP_BASE_URL=https://sklad.radekvymazal.cz
+APP_BASE_URL=https://example.com
 PREFERRED_URL_SCHEME=https
 TEAMS_WEBHOOK_URL=https://...
 TEAMS_WEBHOOK_MODE=workflow
@@ -217,7 +205,7 @@ TEAMS_WEBHOOK_MODE=workflow
 
 ### 4. Zapni Apache konfiguraci
 
-Pouzij ukazku z [apache/sklad-fotokatalog.conf](/Users/radek/Downloads/Sklad/apache/sklad-fotokatalog.conf) a uprav cesty podle konkretniho ISPConfig webu.
+Pouzij ukazku z `apache/sklad-fotokatalog.conf` a uprav cesty podle konkretniho serveru.
 
 Dulezite body:
 
@@ -225,7 +213,7 @@ Dulezite body:
 - `WSGIScriptAlias` musi smerovat na `wsgi.py`
 - `Alias /media/` a `Alias /static/` musi mit pravo `Require all granted`
 - uzivatel Apache musi mit zapis do `data/` a `logs/`
-- pri HTTPS za reverzni proxy nebo ISPConfig je vhodne mit `APP_BASE_URL` a `PREFERRED_URL_SCHEME=https`, aby aplikace generovala spravne absolutni odkazy
+- pri HTTPS za reverzni proxy je vhodne mit `APP_BASE_URL` a `PREFERRED_URL_SCHEME=https`, aby aplikace generovala spravne absolutni odkazy
 
 ### 5. Doporucene prava
 
